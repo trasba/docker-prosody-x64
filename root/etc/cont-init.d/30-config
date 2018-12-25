@@ -1,0 +1,53 @@
+#!/usr/bin/with-contenv bash
+
+# create symlinks for configfile and log
+[[ ! -f /config/prosody.cfg.lua ]] && \
+	cp /etc/prosody/prosody.cfg.lua /config/prosody.cfg.lua
+[[ -f /etc/prosody/prosody.cfg.lua ]] && \
+	rm /etc/prosody/prosody.cfg.lua
+[[ ! -L /etc/prosody/prosody.cfg.lua ]] && \
+	ln -s /config/prosody.cfg.lua /etc/prosody/prosody.cfg.lua
+
+mkdir -p /etc/prosody-filer
+
+[[ ! -f /config/config.toml ]] && \
+        cp /etc/prosody-filer/config.toml /config/config.toml
+[[ -f /etc/prosody-filer/config.toml ]] && \
+        rm /etc/prosody-filer/config.toml
+[[ ! -L /etc/prosody-filer/config.toml ]] && \
+        ln -s /config/config.toml /etc/prosody-filer/config.toml
+
+[[ ! -f /config/prosody.log ]] && \
+	touch /config/prosody.log
+[[ -f /var/log/prosody/prosody.log ]] && \
+	rm /var/log/prosody/prosody.log
+[[ ! -L /var/log/prosody/prosody.log ]] && \
+	ln -s /config/prosody.log /var/log/prosody/prosody.log
+
+[[ ! -f /config/prosody.err ]] && \
+        touch /config/prosody.err
+[[ -f /var/log/prosody/prosody.err ]] && \
+        rm /var/log/prosody/prosody.err
+[[ ! -L /var/log/prosody/prosody.err ]] && \
+        ln -s /config/prosody.err /var/log/prosody/prosody.err
+
+mkdir -p /run/prosody
+
+chmod +x /prosody-filer
+
+mv /prosody-filer /etc/prosody-filer/prosody-filer
+
+cp /certs/* /etc/prosody/certs/
+
+# permissions
+chown -R abc:abc \
+	/config \
+	/etc/prosody \
+	/var/log/prosody \
+	/run/prosody \
+	/var/lib/prosody \
+	/etc/ssl \
+	/etc/prosody-filer \
+	/usr/lib/prosody
+
+usermod -a -G prosody abc

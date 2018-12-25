@@ -1,0 +1,7 @@
+#!/usr/bin/with-contenv bash
+
+cd /etc/prosody-filer || exit
+
+exec \
+        s6-setuidgid abc /etc/prosody-filer/prosody-filer
+

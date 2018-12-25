@@ -1,0 +1,19 @@
+[Unit]
+Description=docker.prosody-x64.service daemon
+After=network.target docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/docker/prosody-x64
+ExecStart=/usr/local/bin/docker-compose -f /opt/docker/prosody-x64/docker-compose.yml up
+ExecStop=/usr/local/bin/docker-compose -f /opt/docker/prosody-x64/docker-compose.yml down
+Restart=always
+User=pi
+# Note RHEL/Fedora uses 'nobody', Debian/Ubuntu uses 'nogroup'
+Group=pi
+#paths also for other applications used by the libs, e.g awk & grep
+#Environment=PATH=/bin:/usr/bin:/home/pi/.nvm/versions/node/v8.10.0/bin
+
+[Install]
+WantedBy=multi-user.target
+

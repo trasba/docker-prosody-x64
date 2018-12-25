@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  prosody:
+    image: trasba/prosody-x64:testing3
+#    build: .
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - "5222:5222"
+      - "5269:5269"
+      - "5050:5050"
+      - "5280:5280"
+    volumes:
+      - ${sourcekey}:/certs/${destkey}:ro
+      - ${sourcecrt}:/certs/${destcrt}:ro
+      - ${volconfig}:/config
+      - ${volstorage}:/var/lib/prosody
+    restart: unless-stopped
+
