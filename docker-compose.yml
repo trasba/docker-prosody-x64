@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   prosody:
-    image: trasba/prosody-x64:testing3
+    image: trasba/prosody-x64:latest
 #    build: .
     environment:
       - TZ=${TZ}

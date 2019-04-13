@@ -11,7 +11,7 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("trasba/docker-prosody-x64", "--no-cache .")
+        app = docker.build("trasba/prosody-x64", "--no-cache .")
     }
 
     /*stage('Test image') {
